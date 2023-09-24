@@ -110,12 +110,18 @@ const viewCart = async (req, res) => {
   try {
     const customerId = req.params.customerId;
     const customer = await Customer.findById(customerId);
-    return res.json(customer.cart);
+    const IDs = customer.cart;
+    const productPromises = IDs.map(async (id) => {
+      return await Product.findById(id);
+    });
+    const products = await Promise.all(productPromises);
+    return res.json(products);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch customer cart" });
   }
 };
+
 
 //POST
 const addProductToCart = async (req, res) => {
@@ -140,13 +146,14 @@ const addProductToCart = async (req, res) => {
     await customer.save();
     await product.save();
 
-    return res.status(200).json({ message: "Product added to your cart successfully." });
+    return res
+      .status(200)
+      .json({ message: "Product added to your cart successfully." });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to add product to your cart!!" });
   }
 };
-
 
 module.exports = {
   registerCustomer,
