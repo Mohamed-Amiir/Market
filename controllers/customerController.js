@@ -104,9 +104,21 @@ const updateCustomerProfile = async (req, res) => {
   }
 };
 
+//GET 
+const viewCart = async (req,res)=>{
+  try {
+   const customerId = req.params.customerId;
+   const customer = await Customer.findById(customerId);
+   return res.json(customer.cart)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch customer cart" });
+  }
+}
 module.exports = {
   registerCustomer,
   loginCustomer,
   getCustomerProfile,
   updateCustomerProfile,
+  viewCart
 };

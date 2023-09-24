@@ -1,7 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  category: {
     type: String,
     required: true,
   },
@@ -15,12 +19,11 @@ const productSchema = new mongoose.Schema({
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Seller',
-    required: true,
+    ref: "Seller",
   },
   // You can add more fields like product images, ratings, and reviews.
 });
 
-const Product = mongoose.model('products', productSchema);
+const Product = mongoose.model("products", productSchema);
 
 module.exports = Product;

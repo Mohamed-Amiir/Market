@@ -4,10 +4,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const customerRoute = require("./routes/customerRouter");
+const sellerRoute = require("./routes/sellerRouter");
 const config = require('config');
 
 app.use(bodyParser.json());
 app.use("/customer", customerRoute);
+app.use("/seller", sellerRoute);
 mongoose
   .connect("mongodb://localhost:27017/market", {
     useNewUrlParser: true,

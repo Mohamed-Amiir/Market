@@ -21,6 +21,12 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
   // You can add more fields as needed (e.g., profile picture, phone number, etc.)
 });
 customerSchema.method("genAuthToken", function () {
