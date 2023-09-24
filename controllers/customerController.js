@@ -1,4 +1,5 @@
 const Customer = require("../models/Customer");
+const Product = require("../models/Product");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const config = require("config");
@@ -104,21 +105,54 @@ const updateCustomerProfile = async (req, res) => {
   }
 };
 
-//GET 
-const viewCart = async (req,res)=>{
+//GET
+const viewCart = async (req, res) => {
   try {
-   const customerId = req.params.customerId;
-   const customer = await Customer.findById(customerId);
-   return res.json(customer.cart)
+    const customerId = req.params.customerId;
+    const customer = await Customer.findById(customerId);
+    return res.json(customer.cart);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch customer cart" });
   }
-}
+};
+
+//POST
+const addProductToCart = async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found." });
+    }
+
+    const customerId = req.params.customerId;
+    const customer = await Customer.findById(customerId);
+
+    if (!customer) {
+      return res.status(404).json({ error: "Customer not found." });
+    }
+
+    customer.cart.push(product);
+    product.quantity -= 1;
+
+    await customer.save();
+    await product.save();
+
+    return res.status(200).json({ message: "Product added to your cart successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to add product to your cart!!" });
+  }
+};
+
+
 module.exports = {
   registerCustomer,
   loginCustomer,
   getCustomerProfile,
   updateCustomerProfile,
-  viewCart
+  viewCart,
+  addProductToCart,
 };

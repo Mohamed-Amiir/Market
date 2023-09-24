@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const config = require("config");
 
-// POST /api/customers/register
+// POST /api/seller/register
 const registerSeller = async (req, res) => {
   try {
     //     1- Check if the customer already exist or not
@@ -41,7 +41,7 @@ const registerSeller = async (req, res) => {
   }
 };
 
-// POST /api/customers/login
+// POST /api/seller/login
 const loginSeller = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -71,12 +71,13 @@ const loginSeller = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const seller = await Seller.findById(req.params.sellerId);
-    const { name, category, description, price } = req.body;
+    const { name, category, description, price,quantity } = req.body;
     const product = new Product({
       name: name,
       category: category,
       description: description,
       price: price,
+      quantity:quantity,
       seller: seller,
     });
     await product.save();
