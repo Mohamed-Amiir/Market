@@ -110,18 +110,21 @@ const viewCart = async (req, res) => {
   try {
     const customerId = req.params.customerId;
     const customer = await Customer.findById(customerId);
-    const IDs = customer.cart;
+    const IDs = customer.cart.list;
+    let totalCost = 0;
     const productPromises = IDs.map(async (id) => {
       return await Product.findById(id);
     });
     const products = await Promise.all(productPromises);
-    return res.json(products);
+    products.forEach((element) => {
+      totalCost += element.price;
+    });
+    return res.json(products).send("Total Cost :", totalCost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch customer cart" });
   }
 };
-
 
 //POST
 const addProductToCart = async (req, res) => {
@@ -139,8 +142,8 @@ const addProductToCart = async (req, res) => {
     if (!customer) {
       return res.status(404).json({ error: "Customer not found." });
     }
-
-    customer.cart.push(product);
+    customer.cart.cost += product.price;
+    customer.cart.list.push(product);
     product.quantity -= 1;
 
     await customer.save();

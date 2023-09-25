@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const { type } = require("../util/customerValditor");
 
 const customerSchema = new mongoose.Schema({
   name: {
@@ -21,12 +22,15 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cart: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
-  ],
+  cart: {
+    list: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    cost: { type: Number, default: 0 },
+  },
   // You can add more fields as needed (e.g., profile picture, phone number, etc.)
 });
 customerSchema.method("genAuthToken", function () {
