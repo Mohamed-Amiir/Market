@@ -16,14 +16,16 @@ const sellerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address:{
-    type:String,
-    required:true
+  address: {
+    type: String,
+    required: true,
   },
-  products:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-}]
+  products: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
   // You can add more fields as needed (e.g., business information, contact details, etc.)
 });
 sellerSchema.method("genAuthToken", function () {

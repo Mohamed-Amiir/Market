@@ -1,5 +1,6 @@
 const Seller = require("../models/Seller");
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const config = require("config");
@@ -71,20 +72,27 @@ const loginSeller = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const seller = await Seller.findById(req.params.sellerId);
-    const { name, category, description, price,quantity } = req.body;
+    const { name, category, description, price, quantity } = req.body;
+    let cat = await Category.findOne({ category: category });
+    if (!cat) {
+      cat = new Category({ category: category, list: [] });
+    }
     const product = new Product({
       name: name,
       category: category,
       description: description,
       price: price,
-      quantity:quantity,
+      quantity: quantity,
       seller: seller,
     });
-    await product.save();
     seller.products.push(product);
-    await seller.save();
-    res.status(201).send("Product added successfully");
+    cat.list.push(product);
 
+    await seller.save();
+    await cat.save();
+    await product.save();
+
+    res.status(201).send("Product added successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to add product" });
