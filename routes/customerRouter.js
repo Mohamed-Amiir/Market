@@ -26,4 +26,6 @@ router.post(
 router.get("/cart/:customerId", customerController.viewCart);
 // Add more routes as needed (e.g., view orders, add to cart, etc.)
 
+router.post("/rate/:customerId/:productId", customerController.rateProduct);
+
 module.exports = router;

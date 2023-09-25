@@ -116,10 +116,11 @@ const viewCart = async (req, res) => {
       return await Product.findById(id);
     });
     const products = await Promise.all(productPromises);
-    products.forEach((element) => {
-      totalCost += element.price;
-    });
-    return res.json(products).send("Total Cost :", totalCost);
+    const cart = {
+      list: [products],
+      cost: customer.cart.cost,
+    };
+    return res.status(200).json(cart);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch customer cart" });
@@ -132,7 +133,7 @@ const addProductToCart = async (req, res) => {
     const productId = req.params.productId;
     const product = await Product.findById(productId);
 
-    if (!product) {
+    if (!product || product.quantity <= 0) {
       return res.status(404).json({ error: "Product not found." });
     }
 
@@ -158,6 +159,62 @@ const addProductToCart = async (req, res) => {
   }
 };
 
+
+// POST - Rate a product
+const rateProduct = async (req, res) => {
+  try {
+    // Find the customer by ID
+    const customer = await Customer.findById(req.params.customerId);
+
+    // Find the product by ID
+    const product = await Product.findById(req.params.productId);
+
+    // Check if the customer and product exist
+    if (!customer) {
+      return res.status(404).json({ error: 'Customer not found' });
+    }
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Check if the customer has already rated this product
+    const existingRating = product.ratings.find(
+      (rating) => rating.customer.toString() === customer._id.toString()
+    );
+
+    if (existingRating) {
+      return res.status(400).json({ error: 'Customer has already rated this product' });
+    }
+
+    // Create a new rating object
+    const newRating = {
+      customer: customer,
+      rate: req.body.rate, // Rating provided by the customer in the request body
+    };
+
+    // Add the new rating to the product's ratings array
+    product.ratings.push(newRating);
+
+    // Calculate the new average rating for the product
+    const totalRatings = product.ratings.length;
+    const totalRatingSum = product.ratings.reduce((sum, rating) => sum + rating.rate, 0);
+    const averageRating = totalRatingSum / totalRatings;
+
+    // Update the product's average rating
+    product.rate = averageRating;
+
+    // Save the updated product
+    await product.save();
+    res.status(200).json({ message: 'Product rated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
 module.exports = {
   registerCustomer,
   loginCustomer,
@@ -165,4 +222,5 @@ module.exports = {
   updateCustomerProfile,
   viewCart,
   addProductToCart,
+  rateProduct
 };

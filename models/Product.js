@@ -21,7 +21,21 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Seller",
   },
-
+  ratings: [
+    {
+      customer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Customer",
+      },
+      rate: {
+        type: Number,
+      },
+    },
+  ],
+  rate: {
+    type: Number,
+    default: 0,
+  },
   // You can add more fields like product images, ratings, and reviews.
 });
 
