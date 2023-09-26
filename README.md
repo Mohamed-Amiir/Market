@@ -62,7 +62,7 @@ To get started with the E-Commerce Backend Project, follow these steps:
 ```
 2. Navigate to the project directory:
 ```bash
-cd e-commerce-backend
+cd Market 
 ```
 3. Install the required dependencies:
 ```bash
