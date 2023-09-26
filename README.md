@@ -58,7 +58,7 @@ To get started with the E-Commerce Backend Project, follow these steps:
 
 1. Clone the repository:
 ```bash
- git clone https://github.com/your-username/e-commerce-backend.git
+ git clone https://github.com/Mohamed22198/Market.git
 ```
 2. Navigate to the project directory:
 ```bash
