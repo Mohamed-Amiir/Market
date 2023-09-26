@@ -6,7 +6,7 @@ const validate = require("../middlewares/customerMWvalidator");
 // Define routes for customer-related operations
 
 // Customer registration
-router.post("/register", validate, customerController.registerCustomer);
+router.post("/signup", validate, customerController.registerCustomer);
 
 // Customer login
 router.post("/login", customerController.loginCustomer);
@@ -15,17 +15,23 @@ router.post("/login", customerController.loginCustomer);
 router.get("/profile/:customerId", customerController.getCustomerProfile);
 
 // Update customer profile by ID
-router.put("/profile/:customerId", customerController.updateCustomerProfile);
+router.put(
+  "/update-profile/:customerId",
+  customerController.updateCustomerProfile
+);
 
 // Add product to cart
 router.post(
-  "/cart/:customerId/:productId",
+  "/add-to-cart/:customerId/:productId",
   customerController.addProductToCart
 );
 // Get customer cart by ID
-router.get("/cart/:customerId", customerController.viewCart);
+router.get("/view-cart/:customerId", customerController.viewCart);
 // Add more routes as needed (e.g., view orders, add to cart, etc.)
 
-router.post("/rate/:customerId/:productId", customerController.rateProduct);
+router.post(
+  "/rate-product/:customerId/:productId",
+  customerController.rateProduct
+);
 
 module.exports = router;

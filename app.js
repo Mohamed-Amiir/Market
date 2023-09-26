@@ -8,8 +8,8 @@ const sellerRoute = require("./routes/sellerRouter");
 const config = require('config');
 
 app.use(bodyParser.json());
-app.use("/customer", customerRoute);
-app.use("/seller", sellerRoute);
+app.use("/api/customer", customerRoute);
+app.use("//api/seller", sellerRoute);
 mongoose
   .connect("mongodb://localhost:27017/market", {
     useNewUrlParser: true,
