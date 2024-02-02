@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { type } = require("../util/customerValditor");
 
 const customerSchema = new mongoose.Schema({
   name: {
