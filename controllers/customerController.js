@@ -159,7 +159,6 @@ const addProductToCart = async (req, res) => {
   }
 };
 
-
 // POST - Rate a product
 const rateProduct = async (req, res) => {
   try {
@@ -171,11 +170,11 @@ const rateProduct = async (req, res) => {
 
     // Check if the customer and product exist
     if (!customer) {
-      return res.status(404).json({ error: 'Customer not found' });
+      return res.status(404).json({ error: "Customer not found" });
     }
 
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
     // Check if the customer has already rated this product
@@ -184,7 +183,9 @@ const rateProduct = async (req, res) => {
     );
 
     if (existingRating) {
-      return res.status(400).json({ error: 'Customer has already rated this product' });
+      return res
+        .status(400)
+        .json({ error: "Customer has already rated this product" });
     }
 
     // Create a new rating object
@@ -198,7 +199,10 @@ const rateProduct = async (req, res) => {
 
     // Calculate the new average rating for the product
     const totalRatings = product.ratings.length;
-    const totalRatingSum = product.ratings.reduce((sum, rating) => sum + rating.rate, 0);
+    const totalRatingSum = product.ratings.reduce(
+      (sum, rating) => sum + rating.rate,
+      0
+    );
     const averageRating = totalRatingSum / totalRatings;
 
     // Update the product's average rating
@@ -206,14 +210,12 @@ const rateProduct = async (req, res) => {
 
     // Save the updated product
     await product.save();
-    res.status(200).json({ message: 'Product rated successfully' });
+    res.status(200).json({ message: "Product rated successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-
 
 module.exports = {
   registerCustomer,
@@ -222,5 +224,5 @@ module.exports = {
   updateCustomerProfile,
   viewCart,
   addProductToCart,
-  rateProduct
+  rateProduct,
 };

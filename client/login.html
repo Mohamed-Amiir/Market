@@ -11,13 +11,8 @@
       <h1>Login</h1>
     </header>
     <div class="container">
-      <form id="login-form" class="form">
-        <input
-          type="text"
-          id="login-username"
-          placeholder="Username"
-          required
-        />
+      <form id="login-form" class="form" action="login" method="POST">
+        <input type="text" id="login-email" placeholder="Email" required />
         <input
           type="password"
           id="login-password"
@@ -27,7 +22,7 @@
         <button type="submit">Login</button>
       </form>
       <div class="signup-link">
-        <p>Don't have an account? <a href="signup.html">Signup here</a></p>
+        <p>Don't have an account? <a href="/signup">Signup here</a></p>
       </div>
     </div>
     <footer class="footer">
