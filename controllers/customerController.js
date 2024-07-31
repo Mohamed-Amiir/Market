@@ -56,10 +56,7 @@ const loginCustomer = async (req, res) => {
 
     // Generate and return an authentication token
     // JSON WEB TOKEN
-    if (!config.get("jwtsec"))
-      return res
-        .status(500)
-        .send("Request can not be fullfilled ... token is not defined !!");
+
     const token = customer.genAuthToken();
     res.json({ token });
   } catch (error) {

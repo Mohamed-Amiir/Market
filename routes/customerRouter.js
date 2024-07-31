@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const customerController = require("../controllers/customerController");
 const validate = require("../middlewares/customerMWvalidator");
-
+const auth = require("../middlewares/auth");
 // Define routes for customer-related operations
 
 // Customer registration
@@ -12,7 +12,7 @@ router.post("/signup", validate, customerController.registerCustomer);
 router.post("/login", customerController.loginCustomer);
 
 // Get customer profile by ID
-router.get("/profile/:customerId", customerController.getCustomerProfile);
+router.get("/profile/:customerId", auth, customerController.getCustomerProfile);
 
 // Update customer profile by ID
 router.put(

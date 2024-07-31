@@ -1,11 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const port = process.env.PORT || 3002;
+require("dotenv").config();
+const port = process.env.PORT;
 const mongoose = require("mongoose");
 const customerRoute = require("./routes/customerRouter");
 const sellerRoute = require("./routes/sellerRouter");
-const config = require("config");
 const path = require("path");
 
 app.use(bodyParser.json());

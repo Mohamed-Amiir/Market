@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 const customerSchema = new mongoose.Schema({
   name: {
@@ -36,8 +35,10 @@ customerSchema.method("genAuthToken", function () {
   const token = jwt.sign(
     {
       usrid: this._id,
+      name: this.name,
     },
-    config.get("jwtsec")
+    process.env.JWT_SECRET_KEY,
+    { expiresIn: "2m" } // Set token expiration to 2 minutes
   );
   return token;
 });
