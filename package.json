@@ -18,6 +18,8 @@
     "express-validator": "^7.0.1",
     "joi": "^17.10.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.5.2"
+    "mongoose": "^7.5.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

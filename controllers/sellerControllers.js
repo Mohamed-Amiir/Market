@@ -29,7 +29,7 @@ const registerSeller = async (req, res) => {
       await seller.save();
 
       // JSON WEB TOKEN
-      if (!config.get("jwtsec"))
+      if (!process.env.JWT_SECRET_KEY)
         return res
           .status(500)
           .send("Request can not be fullfilled ... token is not defined !!");
@@ -57,7 +57,8 @@ const loginSeller = async (req, res) => {
 
     // Generate and return an authentication token
     // JSON WEB TOKEN
-    if (!config.get("jwtsec"))
+
+    if (!process.env.JWT_SECRET_KEY)
       return res
         .status(500)
         .send("Request can not be fullfilled ... token is not defined !!");

@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const customerRoute = require("./routes/customerRouter");
 const sellerRoute = require("./routes/sellerRouter");
 const path = require("path");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 app.use(bodyParser.json());
 app.use("/customer", customerRoute);
@@ -32,6 +34,26 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/signup.html"));
 });
 
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Market API",
+      version: "1.0.0",
+      description: "A simple Express Library API",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
+
+const spacs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

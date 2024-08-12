@@ -28,7 +28,7 @@ const registerCustomer = async (req, res) => {
       await customer.save();
 
       // JSON WEB TOKEN
-      if (!config.get("jwtsec"))
+      if (!process.env.JWT_SECRET_KEY)
         return res
           .status(500)
           .send("Request can not be fullfilled ... token is not defined !!");
