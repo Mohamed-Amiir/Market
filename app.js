@@ -34,7 +34,6 @@ app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/signup.html"));
 });
 
-
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -45,7 +44,9 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url:
+          "http://localhost:3000" ||
+          "https://market-git-main-mohamed-amirs-projects.vercel.app/",
       },
     ],
   },
