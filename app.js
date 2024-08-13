@@ -44,9 +44,7 @@ const options = {
     },
     servers: [
       {
-        url:
-          "http://localhost:3000" ||
-          "https://market-git-main-mohamed-amirs-projects.vercel.app/",
+        url:"https://market-git-main-mohamed-amirs-projects.vercel.app"
       },
     ],
   },
