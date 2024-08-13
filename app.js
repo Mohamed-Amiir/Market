@@ -53,7 +53,7 @@ const options = {
 };
 
 const spacs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
+app.use("/", swaggerUi.serve, swaggerUi.setup(spacs));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
