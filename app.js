@@ -16,7 +16,7 @@ app.use("/seller", sellerRoute);
 app.use(express.static(path.join(__dirname, "client")));
 
 mongoose
-  .connect("mongodb://localhost:27017/market", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
