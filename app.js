@@ -16,15 +16,15 @@ app.use("/seller", sellerRoute);
 app.use(express.static(path.join(__dirname, "client")));
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect("mongodb://localhost:27017/market", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected to local MongoDB");
   })
   .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
+    console.error("Error connecting to local MongoDB:", error);
   });
 
 app.get("/login", (req, res) => {

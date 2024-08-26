@@ -8,7 +8,7 @@
 const express = require("express");
 const router = express.Router();
 const sellerController = require("../controllers/sellerControllers");
-
+const productMWvalidator = require("../middlewares/productMWvalidator");
 // Seller registration
 /**
  * @swagger
@@ -109,6 +109,6 @@ router.post("/login", sellerController.loginSeller);
  *       404:
  *         description: Seller not found
  */
-router.post("/add-product/:sellerId", sellerController.addProduct);
+router.post("/add-product/:sellerId",productMWvalidator, sellerController.addProduct);
 
 module.exports = router;
