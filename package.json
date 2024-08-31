@@ -21,5 +21,8 @@
     "mongoose": "^7.5.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2"
   }
 }
