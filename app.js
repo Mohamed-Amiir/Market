@@ -33,6 +33,9 @@ app.get("/login", (req, res) => {
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/signup.html"));
 });
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome to Market API</h1>");
+});
 
 const options = {
   definition: {
@@ -44,7 +47,7 @@ const options = {
     },
     servers: [
       {
-        url:"https://market-git-main-mohamed-amirs-projects.vercel.app"
+        url: "https://market-git-main-mohamed-amirs-projects.vercel.app",
       },
     ],
   },
@@ -52,7 +55,8 @@ const options = {
 };
 
 const spacs = swaggerJsdoc(options);
-app.use("/", swaggerUi.serve, swaggerUi.setup(spacs));
+app.use('/api-docs', express.static('dist/api-docs'));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
